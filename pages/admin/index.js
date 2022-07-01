@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ethers } from "ethers";
-import Attendance from "../../artifacts/contracts/Attendance.sol/Attendance.json";
+// import Attendance from "../../artifacts/contracts/Attendance.sol/Attendance.json";
 import { useMoralis } from "react-moralis";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,7 +10,7 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/solid";
 
-const attendanceAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+// const attendanceAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 function Dashboard() {
   const [studnetID, setStudentID] = useState();
@@ -29,40 +29,40 @@ function Dashboard() {
 
   async function getStudents() {
     if (isAuthenticated) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const contract = new ethers.Contract(
-        attendanceAddress,
-        Attendance.abi,
-        provider
-      );
-      try {
-        const data = await contract.getAllStudents();
-        console.log("data", data);
-      } catch (error) {
-        console.log("Error", error);
-      }
+      // const provider = new ethers.providers.Web3Provider(window.ethereum);
+      // const contract = new ethers.Contract(
+      //   attendanceAddress,
+      //   Attendance.abi,
+      //   provider
+      // );
+      // try {
+      //   const data = await contract.getAllStudents();
+      //   console.log("data", data);
+      // } catch (error) {
+      //   console.log("Error", error);
+      // }
     }
   }
 
   async function createStudent(studnetID, fullName, program, year, avatar) {
     if (isAuthenticated) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        attendanceAddress,
-        Attendance.abi,
-        signer
-      );
-      const transaction = await contract.createStudent(
-        studnetID,
-        fullName,
-        program,
-        year,
-        avatar
-      );
-      await transaction.wait();
-      console.log(transaction);
-      getStudents();
+      // const provider = new ethers.providers.Web3Provider(window.ethereum);
+      // const signer = provider.getSigner();
+      // const contract = new ethers.Contract(
+      //   attendanceAddress,
+      //   Attendance.abi,
+      //   signer
+      // );
+      // const transaction = await contract.createStudent(
+      //   studnetID,
+      //   fullName,
+      //   program,
+      //   year,
+      //   avatar
+      // );
+      // await transaction.wait();
+      // console.log(transaction);
+      // getStudents();
     }
   }
 
