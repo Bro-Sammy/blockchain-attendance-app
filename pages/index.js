@@ -8,8 +8,7 @@ import { XIcon } from "@heroicons/react/outline";
 function Home() {
   const [toggleLoading, setToggleLoading] = useState(false);
   const [modal, setModal] = useState(false);
-  const { authenticate, isAuthenticated, user, authError, logout } =
-    useMoralis();
+  const { authenticate, isAuthenticated, user, authError, logout } = useMoralis();
   const router = useRouter();
 
   // connect wallet account
@@ -88,7 +87,7 @@ function Home() {
           )}
           <div className="relative mb-3">
             <span
-              onClick={() => router.push("/help")}
+              onClick={() => router.push("#")}
               className="absolute text-center -right-0 -top-0 rounded-full border-2 shadow-lg hover:scale-105 hover:rotate-2 duration-300 w-24 h-24 z-10 opacity-100 bg-white"
             >
               <Image
@@ -106,7 +105,7 @@ function Home() {
               </small>
             </span>
             <span
-              onClick={() => checkAuth({ link: "admin_login" })}
+              onClick={() => checkAuth({ link: "admin" })}
               className="absolute left-0 top-0 rounded-full border-2 shadow-lg hover:scale-105 hover:rotate-2 duration-300 w-24 h-24 z-10 opacity-100 bg-white"
             >
               <Image
@@ -123,7 +122,7 @@ function Home() {
                 Admin
               </small>
             </span>
-            <span onClick={()=>checkAuth({ link: "student_login" })} className="absolute right-0 bottom-0 rounded-full border-2 shadow-lg hover:scale-105 hover:rotate-2 duration-300 w-24 h-24 z-10 opacity-100 bg-white">
+            <span onClick={()=>checkAuth({ link: "student" })} className="absolute right-0 bottom-0 rounded-full border-2 shadow-lg hover:scale-105 hover:rotate-2 duration-300 w-24 h-24 z-10 opacity-100 bg-white">
               <Image
                 src={"/student.png"}
                 layout="responsive"
@@ -138,7 +137,7 @@ function Home() {
                 Student
               </small>
             </span>
-            <span onClick={()=>checkAuth({ link: "lecturer_login" })} className="absolute left-0 bottom-0 rounded-full border-2 shadow-lg hover:scale-105 hover:rotate-2 duration-300 w-24 h-24 z-10 opacity-100 bg-white">
+            <span onClick={()=>checkAuth({ link: "lecturer" })} className="absolute left-0 bottom-0 rounded-full border-2 shadow-lg hover:scale-105 hover:rotate-2 duration-300 w-24 h-24 z-10 opacity-100 bg-white">
               <Image
                 src={"/lecturer.png"}
                 layout="responsive"

@@ -21,16 +21,15 @@ function Login() {
 
   const handleSubmit = async (e) => { 
     e.preventDefault();
-     
+    return router.push("/student");
     const result = await createStudent(
-      studnetID,
+      studentID,
       fullName,
       program,
       year,
       avatar
     );
-    // console.log(result);  
-    router.push("/student");
+   if(result) return router.push("/student");
   };
 
   async function createStudent(studnetID, fullName, program, year, avatar) {
@@ -42,16 +41,12 @@ function Login() {
         Attendance.abi,
         signer
       );
-      const transaction = await contract.createStudent(
+      const transaction = await contract.loginStudent(
         studnetID,
-        fullName,
-        program,
-        year,
-        avatar
+        program
       );
       await transaction.wait();
-      console.log(transaction);
-      getStudents();
+      console.log(transaction); 
     }
   }
 

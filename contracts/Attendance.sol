@@ -91,10 +91,11 @@ contract Attendance is Ownable {
     }
 
      // Student login
-    function loginStudent(uint256 _studentId, string memory _program) public view returns(bool, string memory){
+    function loginStudent(uint256 _studentId, string memory _program ) public view returns(bool, string memory){
         
             if(studentList[_studentId].studentId == _studentId){
                 if(keccak256(abi.encodePacked(studentList[_studentId].program)) == keccak256(abi.encodePacked(_program))){
+                    
                     return(true,"login successfully");
                 }else{
                     return(false,"incorrect password");

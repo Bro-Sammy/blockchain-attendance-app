@@ -37,9 +37,9 @@ function Dashboard() {
     }
   };
 
-  useEffect(() => {
-    gl();
-  }, []);
+  // useEffect(() => {
+  //   gl();
+  // }, []);
 
   return (
     <>
@@ -48,7 +48,7 @@ function Dashboard() {
       <main className="px-2 md:px-20 h-screen mb-10">
         <div className="p-2 mb-5">
           <small className="text-slate-500">Good Morning</small>
-          <h2 className="font-bold text-white">Hi, Samuel Amoah</h2>
+          <h2 className="font-bold text-white">Hi, Nana Baidoo</h2>
         </div>
 
         {/* current class */}
@@ -93,7 +93,7 @@ function Dashboard() {
                 </h2>
               </span>
 
-              <button className="bg-green-600 hover:bg-green-700 shadow-lg w-fit h-fit hover:text-slate-100 text-slate-200 p-2 rounded-full ">
+              <button className="bg-green-600 hover:bg-green-700 shadow-lg w-fit h-fit hover:text-slate-100 text-slate-200 p-2 rounded-full " onClick={()=>authenticate}>
                 <CheckIcon className="w-8" />
               </button>
             </div>
