@@ -96,7 +96,7 @@ function Home() {
                 width={512}
                 height={512}
                 alt="logo"
-                blurDataURL="/img5.jpg"
+                blurDataURL="/help.png"
                 placeholder="blur"
                 className="object-cover rounded-full"
               />
@@ -114,7 +114,7 @@ function Home() {
                 width={512}
                 height={512}
                 alt="logo"
-                blurDataURL="/img5.jpg"
+                blurDataURL="/admin.png"
                 placeholder="blur"
                 className="object-cover rounded-full"
               />
@@ -129,7 +129,7 @@ function Home() {
                 width={512}
                 height={512}
                 alt="logo"
-                blurDataURL="/img5.jpg"
+                blurDataURL="/student.png"
                 placeholder="blur"
                 className="object-cover rounded-full"
               />
@@ -144,7 +144,7 @@ function Home() {
                 width={512}
                 height={512}
                 alt="logo"
-                blurDataURL="/img5.jpg"
+                blurDataURL="/lecturer.png"
                 placeholder="blur"
                 className="object-contain rounded-full"
               />
@@ -160,7 +160,7 @@ function Home() {
                 width={512}
                 height={512}
                 alt="logo"
-                blurDataURL="/img5.jpg"
+                blurDataURL="/eth.png"
                 placeholder="blur"
                 className="object-cover rounded-full opacity-80 lg:opacity-90"
               />
