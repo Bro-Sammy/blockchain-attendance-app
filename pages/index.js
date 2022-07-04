@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useMoralis, useApiContract, useWeb3Contract } from "react-moralis";
 import { useRouter } from "next/router";
 import { XIcon } from "@heroicons/react/outline";
-import Attendance from "../artifacts/contracts/Attendance.sol/Attendance.json";
+// import Attendance from "../artifacts/contracts/Attendance.sol/Attendance.json";
 import { contractAddress, ownerAddress } from "../config";
 
 function Home() {
@@ -45,8 +45,8 @@ function Home() {
     if (isAuthenticated) {
       setModal()
       
-      console.log(enableWeb3())
-      // return router.push(`/${link}`);
+      // console.log(enableWeb3())
+      return router.push(`/${link}`);
     }
     return router.push("/", setModal("Please Connect your account!"));
   };

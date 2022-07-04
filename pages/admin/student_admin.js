@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ethers } from "ethers";
-import Attendance from "../../artifacts/contracts/Attendance.sol/Attendance.json";
+// import Attendance from "../../artifacts/contracts/Attendance.sol/Attendance.json";
 import { contractAddress, ownerAddress } from "../../config";
 import { student, lecturer } from "../../seed";
 import SideBar from "../../components/SideBar";
@@ -32,42 +32,42 @@ function Student() {
   } = useMoralis();
 
   async function getStudents() {
-    if (isAuthenticated) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const contract = new ethers.Contract(
-        contractAddress,
-        Attendance.abi,
-        provider
-      );
-      try {
-        const data = await contract.getAllStudents();
-        console.log("data", data);
-      } catch (error) {
-        console.log("Error", error);
-      }
-    }
+    // if (isAuthenticated) {
+    //   const provider = new ethers.providers.Web3Provider(window.ethereum);
+    //   const contract = new ethers.Contract(
+    //     contractAddress,
+    //     Attendance.abi,
+    //     provider
+    //   );
+    //   try {
+    //     const data = await contract.getAllStudents();
+    //     console.log("data", data);
+    //   } catch (error) {
+    //     console.log("Error", error);
+    //   }
+    // }
   }
 
   async function createStudent(studnetID, fullName, program, year, avatar) {
-    if (isAuthenticated) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        contractAddress,
-        Attendance.abi,
-        signer
-      );
-      const transaction = await contract.createStudent(
-        studnetID,
-        fullName,
-        program,
-        year,
-        avatar
-      );
-      await transaction.wait();
-      console.log(transaction);
-      getStudents();
-    }
+    // if (isAuthenticated) {
+    //   const provider = new ethers.providers.Web3Provider(window.ethereum);
+    //   const signer = provider.getSigner();
+    //   const contract = new ethers.Contract(
+    //     contractAddress,
+    //     Attendance.abi,
+    //     signer
+    //   );
+    //   const transaction = await contract.createStudent(
+    //     studnetID,
+    //     fullName,
+    //     program,
+    //     year,
+    //     avatar
+    //   );
+    //   await transaction.wait();
+    //   console.log(transaction);
+    //   getStudents();
+    // }
   }
   const handleSubmit = async (e) => {
     // console.log(studnetID, fullName, program, year, avatar)

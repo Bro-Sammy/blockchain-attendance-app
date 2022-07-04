@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import Attendance from "../../artifacts/contracts/Attendance.sol/Attendance.json";
+// import Attendance from "../../artifacts/contracts/Attendance.sol/Attendance.json";
 import { useMoralis } from "react-moralis";
 import SideBar from "../../components/SideBar";
 import Link from "next/link";
@@ -53,22 +53,22 @@ function Dashboard() {
   };
 
   async function getStudents() {
-    if (isAuthenticated) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const contract = new ethers.Contract(
-        contractAddress,
-        Attendance.abi,
-        provider
-      );
-      try {
-        const data = await contract.getAllStudents();
-        console.log("data", data);
-      } catch (error) {
-        console.log("Error", error);
-      }
-    }
+    // if (isAuthenticated) {
+    //   const provider = new ethers.providers.Web3Provider(window.ethereum);
+    //   const contract = new ethers.Contract(
+    //     contractAddress,
+    //     Attendance.abi,
+    //     provider
+    //   );
+    //   try {
+    //     const data = await contract.getAllStudents();
+    //     console.log("data", data);
+    //   } catch (error) {
+    //     console.log("Error", error);
+    //   }
+    // }
   }
-  
+
    
 
   return (
