@@ -11,7 +11,7 @@ function Home() {
   const [toggleLoading, setToggleLoading] = useState(false);
   const [modal, setModal] = useState(false);
   const { authenticate, isAuthenticated, user, authError, logout, enableWeb3, isWeb3Enabled } = useMoralis();
-  const {runContractFunction} = useWeb3Contract({address:contractAddress, functionName: "findStudent", abi: Attendance.abi, params: {}})
+  // const {runContractFunction} = useWeb3Contract({address:contractAddress, functionName: "findStudent", abi: Attendance.abi, params: {}})
   const router = useRouter();
 
   // connect wallet account
