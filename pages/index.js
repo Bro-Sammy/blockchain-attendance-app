@@ -1,14 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useMoralis } from "react-moralis";
+import { useMoralis, useApiContract, useWeb3Contract } from "react-moralis";
 import { useRouter } from "next/router";
 import { XIcon } from "@heroicons/react/outline";
+import Attendance from "../artifacts/contracts/Attendance.sol/Attendance.json";
+import { contractAddress, ownerAddress } from "../config";
 
 function Home() {
   const [toggleLoading, setToggleLoading] = useState(false);
   const [modal, setModal] = useState(false);
-  const { authenticate, isAuthenticated, user, authError, logout } = useMoralis();
+  const { authenticate, isAuthenticated, user, authError, logout, enableWeb3, isWeb3Enabled } = useMoralis();
+  const {runContractFunction} = useWeb3Contract({address:contractAddress, functionName: "findStudent", abi: Attendance.abi, params: {}})
   const router = useRouter();
 
   // connect wallet account
@@ -41,7 +44,9 @@ function Home() {
     setModal()
     if (isAuthenticated) {
       setModal()
-      return router.push(`/${link}`);
+      
+      console.log(enableWeb3())
+      // return router.push(`/${link}`);
     }
     return router.push("/", setModal("Please Connect your account!"));
   };
@@ -69,7 +74,7 @@ function Home() {
             </div>
             <span className="mb-10 text-center">
               <h2 className="text-slate-200 text-3xl font-semibold">
-                Attendance App
+                Attendance Dapp
               </h2>
               <small className="text-slate-400">
                 Please connect your account and login
@@ -618,12 +623,12 @@ function Home() {
             {user && (
               <button
                 onClick={disconnect}
-                class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-400 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-900 group-hover:from-purple-600 group-hover:to-pink-700  dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800"
+                className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-400 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-900 group-hover:from-purple-600 group-hover:to-pink-700  dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800"
               >
-                <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-slate-900 dark:bg-gray-900 rounded-md group-hover:hidden">
+                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-slate-900 dark:bg-gray-900 rounded-md group-hover:hidden">
                   🔥 Connected
                 </span>
-                <span class="hidden relative px-5 py-2.5 transition-all ease-in duration-75 bg-slate-900 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 group-hover:block">
+                <span className="hidden relative px-5 py-2.5 transition-all ease-in duration-75 bg-slate-900 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 group-hover:block">
                   🔐 Disconnect
                 </span>
               </button>
@@ -657,7 +662,7 @@ function Home() {
 
             {authError && (
               <div
-                class="p-2 mt-3 text-sm text-red-700 bg-red-200 rounded-lg dark:bg-red-200 dark:text-red-800"
+                className="p-2 mt-3 text-sm text-red-700 bg-red-200 rounded-lg dark:bg-red-200 dark:text-red-800"
                 role="alert"
               >
                 <span className="font-medium">😤Error!</span> {authError.code}{" "}

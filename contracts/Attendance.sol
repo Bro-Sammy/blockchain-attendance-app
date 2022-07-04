@@ -1,220 +1,169 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.7; 
 
-import "hardhat/console.sol";
+contract Attendance {
 
-contract Ownable {
     address public owner;
-    string password;
-
-    function Owned() public {
+    modifier onlyOwner {
+        require(owner == msg.sender);
+        _;
+    }
+    constructor (){
         owner = msg.sender;
     }
 
-    modifier onlyOwner() {
-        require(owner == msg.sender, "Ownable: You are not the Admin");
-        _;
-    }
-}
-
-contract Attendance is Ownable {
-    struct Student {
-        uint256 studentId;
+    struct Student{
         address studentAddress;
+        uint sID;
         string fullName;
+        string email;
+        string password;
         string program;
-        string year;
-        string avatar;
     }
 
     Student public student;
-    Student[] public studentList;
-    mapping(address => Student) public studentAddress;
+    Student[] studentList;
+    mapping(address => Student) public findStudent;
 
-    event studentCreationEvent(
-        uint256 studentId,
+    event studentCreatedEvent(
+        address studentAddress,
+        uint sID,
+        string email,
         string fullName,
-        string program,
-        string year
+        string program
     );
 
-    //    function to create system users
-    function createStudent(
-        uint256 _studentId,
-        string memory _fullName,
-        string memory _program,
-        string memory _year,
-        string memory _avatar
-    ) public payable returns (bool, string memory) {
-        if (student.studentId != _studentId) {
-            student.studentId = _studentId;
+    function enrollStudent(address _studentAddress, uint _sID, string memory _fullName, string memory _email, string memory _password, string memory _program) public returns(bool, string memory){
+        
+        if(student.sID != _sID && student.studentAddress != _studentAddress){
+            student.studentAddress = _studentAddress;
+            student.sID = _sID;
             student.fullName = _fullName;
+            student.email = _email;
+            student.password = _password;
             student.program = _program;
-            student.year = _year;
-            student.avatar = _avatar;
 
             studentList.push(student);
-            emit studentCreationEvent(_studentId, _fullName, _program, _year);
-
-            return (true, "Student added Successfully!");
+            emit studentCreatedEvent(_studentAddress, _sID, _email, _fullName, _program);
+            return(true, "You successfully enrolled");
         } else {
-            return (false, "Student already exists!");
+            return(false, "You are not permitted to do this");
         }
     }
 
-    // fetch all students
-    function getAllStudents() public view returns (Student[] memory) {
+    function getAllStudents() public view returns(Student[] memory){
         return studentList;
     }
 
-    // Get particular student
-    function getOneStudent(uint256 _studentId)
-        public
-        view
-        returns (
-            uint256,
-            address,
-            string memory,
-            string memory,
-            string memory,
-            string memory
-        )
-    {
-        return (
-            studentList[_studentId].studentId,
-            studentList[_studentId].studentAddress,
-            studentList[_studentId].fullName,
-            studentList[_studentId].program,
-            studentList[_studentId].year,
-            studentList[_studentId].avatar
-        );
+    // Sigin student
+    function signInStudent() public view returns(bool, string memory){
+        if(student.studentAddress == msg.sender){
+            //  && studentList[_sID].studentAddress == msg.sender studentList[_sID].sID == _sID
+                // if(keccak256(abi.encodePacked(studentList[_sID].password)) == keccak256(abi.encodePacked(_password))){
+                    return(true,"login successfully");
+                // }else{
+                //     return(false,"incorrect password");
+                // }
+            }
+            
+                return(false,"Account does not exists, Please enroll");
+        
     }
 
-     // Student login
-    function loginStudent(uint256 _studentId, string memory _program ) public view returns(bool, string memory){
-        
-            if(studentList[_studentId].studentId == _studentId){
-                if(keccak256(abi.encodePacked(studentList[_studentId].program)) == keccak256(abi.encodePacked(_program))){
-                    
-                    return(true,"login successfully");
-                }else{
-                    return(false,"incorrect password");
-                }
-            }else{
-                return(false,"id does not exists");
-            }
-        }
 
     // Teacher Structure
-    struct Teacher {
-        uint256 tid;
-        address teacherAddress;
-        string name;
-        string courseCode;
+    struct Lecturer{
+        address lecturerAddress;
+        uint lID;
+        string email;
+        string fullName;
         string department;
-        string avatar;
     }
 
-    Teacher public teacher;
-    Teacher[] public teacherList;
-    mapping(address => Teacher) public teacherAddress;
+    Lecturer public lecturer;
+    mapping(address => Lecturer) public findLecturer;
+    Lecturer[] lecturerList;
 
-    event teacherCreationEvent(
-        string name,
-        string courseCode,
+    event lecturerCreatedEvent(
+        uint lID,
+        string email,
+        string fullName,
         string department
     );
 
-    //    function to create teacher
-    function createTeacher(
-        uint256 _tid,
-        string memory _name,
-        string memory _courseCode,
-        string memory _department,
-        string memory _avatar
-    ) public returns (bool, string memory) {
-        if (teacher.tid != _tid) {
-            teacher.tid = _tid;
-            teacher.name = _name;
-            teacher.courseCode = _courseCode;
-            teacher.department = _department;
-            teacher.avatar = _avatar;
+    function createLecturer(uint _lID, string memory _email, string memory _fullName, string memory _department) onlyOwner public returns(bool, string memory){
+        if(lecturer.lID != _lID && keccak256(abi.encodePacked(lecturer.email)) != keccak256(abi.encodePacked(_email))){
+           
+            lecturer.lID = _lID;
+            lecturer.email = _email;
+            lecturer.fullName = _fullName;
+            lecturer.department = _department;
 
-            teacherList.push(teacher);
-            emit teacherCreationEvent(_name, _courseCode, _department);
+            lecturerList.push(lecturer);
 
-            return (true, "Teacher added Successfully!");
-        } else {
-            return (false, "Teacher already exists!");
+            emit lecturerCreatedEvent(_lID, _email, _fullName, _department);
+            return(true, "Lecturer enrolled Successfully!");
         }
+        return(false, "Lecturer with ID already exist");
     }
 
-    // fetch all teachers
-    function getAllTeachers() public view returns (Teacher[] memory) {
-        return teacherList;
+    //login teacher
+    function loginLecturer(uint _lID, string memory _email) public view returns(bool, string memory){
+        if(lecturer.lID == _lID && keccak256(abi.encodePacked(lecturer.email)) == keccak256(abi.encodePacked(_email))){
+            return(true, "You are welcome back");
+        }
+        return(false, "Sorry, user does not exist!");
     }
 
-    // Course Structure
-    struct Course {
-        string courseCode;
-        string name;
-        uint256 tid;
-        uint256[] students;
-        string lng;
-        string lat;
-        string lectureHall;
-        uint256 startTime;
-        uint256 endTime;
+    function getAllLecturers() public view returns(Lecturer[] memory){
+        return lecturerList;
     }
-    Course public course;
-    Course[] public courseList;
-    mapping(address => Course) public courseAddress;
 
-    //  Event for course creation
-    event courseCreationEvent(
-        string name,
-        string courseCode,
-        string lectureHall,
-        uint256 startTime,
-        uint256 endTime
+
+    // Course
+    struct Course{
+        string code;
+        string title;
+        uint lID;
+        string lecName;
+        string day;
+        uint startTime;
+        uint endTime;
+    }
+
+    Course[] courseList;
+    Course public courses;
+
+    event courseCreatedEvent(
+        string code,
+        string title,
+        uint lID,
+        string lecName,
+        string day,
+        uint startTime,
+        uint endTime
     );
 
-    // create course function
-    function createCourse(
-        string memory _courseCode,
-        string memory _name,
-        uint256 _tid,
-        string memory _lng,
-        string memory _lat,
-        string memory _lectureHall,
-        uint256 _startTime,
-        uint256 _endTime
-    ) public returns (bool, string memory) {
-        if (
-            keccak256(abi.encodePacked(course.courseCode)) !=
-            keccak256(abi.encodePacked(_courseCode))
-        ) {
-            course.courseCode = _courseCode;
-            course.name = _name;
-            course.tid = _tid;
-            course.lng = _lng;
-            course.lat = _lat;
-            course.lectureHall = _lectureHall;
-            course.startTime = _startTime;
-            course.endTime = _endTime;
+    //create course
+    function createCourse(string memory _code, string memory _title, uint _lID, string memory _lecName, string memory _day, uint _startTime, uint _endTime) onlyOwner public returns(bool, string memory){
+        if(keccak256(abi.encodePacked(courses.code)) != keccak256(abi.encodePacked(_code))){
+            courses.code = _code;
+            courses.title = _title;
+            courses.lID = _lID;
+            courses.lecName = _lecName;
+            courses.day = _day;
+            courses.startTime = _startTime;
+            courses.endTime = _endTime;
 
-            courseList.push(course);
-            emit courseCreationEvent(
-                _name,
-                _courseCode,
-                _lectureHall,
-                _startTime,
-                _endTime
-            );
-
-            return (true, "Created Successfully");
-        } else {
-            return (false, "Course exists on the blockchain");
+            courseList.push(courses);
+            emit courseCreatedEvent(_code, _title, _lID, _lecName, _day, _startTime, _endTime);
+            return(true, "Course created successfully!!");
         }
+        return(false, "Sorry, course already exist!");
     }
+
+    function getAllCourses() public view returns(Course[] memory){
+        return courseList;
+    }
+
 }

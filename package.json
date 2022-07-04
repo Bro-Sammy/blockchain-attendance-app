@@ -16,6 +16,7 @@
     "magic-sdk": "^8.1.1",
     "moralis": "^1.8.1",
     "next": "12.1.6",
+    "react-calendar": "^3.7.0",
     "react-dom": "18.1.0",
     "react-moralis": "^1.4.0",
     "swiper": "^8.1.5"

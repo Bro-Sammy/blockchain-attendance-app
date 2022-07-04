@@ -1,4 +1,5 @@
 const hre = require("hardhat");
+const fs = require('fs')
 
 const main = async () => { 
  
@@ -6,8 +7,10 @@ const main = async () => {
   const attendance = await Attendance.deploy();
 
   await attendance.deployed();
-
   console.log("Attendance deployed to:", attendance.address);
+
+  fs.writeFileSync('./config.js', `export const contractAddress = "${attendance.address}"
+  export const ownerAddress = "${attendance.signer.address}"`)
 }
 
 const runMain = async () => {
