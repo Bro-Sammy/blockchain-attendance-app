@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ethers } from "ethers";
-import Attendance from "../../artifacts/contracts/Attendance.sol/Attendance.json";
+// import Attendance from "../../artifacts/contracts/Attendance.sol/Attendance.json";
 import { useMoralis } from "react-moralis";
 import SideBar from "../../components/SideBar";
 import Link from "next/link";
